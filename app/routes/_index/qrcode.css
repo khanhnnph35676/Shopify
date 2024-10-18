@@ -1,0 +1,27 @@
+.form-control {
+  width: 50%;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #5c6ac4; /* Màu viền khi focus */
+  box-shadow: 0 0 5px rgba(92, 106, 196, 0.5); /* Đổ bóng khi focus */
+  outline: none; /* Xóa viền mặc định */
+}
+
+.form-control::placeholder {
+  color: #a8a8a8;
+  font-style: italic; /* Làm nghiêng placeholder */
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+}

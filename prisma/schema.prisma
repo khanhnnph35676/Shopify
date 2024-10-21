@@ -12,6 +12,10 @@ datasource db {
   provider = "sqlite"
   url      = "file:dev.sqlite"
 }
+// datasource db {
+//   provider = "mysql"
+//   url      = "mysql://magentoUser:Khanhn227@@localhost:3306/shopify"
+// }
 
 model Session {
   id            String    @id

@@ -3,7 +3,7 @@
 client_id = "ee75194bbdb85b45d0d897f4198ecf71"
 name = "app"
 handle = "app-1381"
-application_url = "https://behaviour-noon-filling-opens.trycloudflare.com"
+application_url = "https://federal-electronics-elections-novelty.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_orders,read_products,write_orders,write_products"
 
 [auth]
 redirect_urls = [
-  "https://behaviour-noon-filling-opens.trycloudflare.com/auth/callback",
-  "https://behaviour-noon-filling-opens.trycloudflare.com/auth/shopify/callback",
-  "https://behaviour-noon-filling-opens.trycloudflare.com/api/auth/callback"
+  "https://federal-electronics-elections-novelty.trycloudflare.com/auth/callback",
+  "https://federal-electronics-elections-novelty.trycloudflare.com/auth/shopify/callback",
+  "https://federal-electronics-elections-novelty.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

@@ -3,7 +3,7 @@
 client_id = "ee75194bbdb85b45d0d897f4198ecf71"
 name = "app"
 handle = "app-1381"
-application_url = "https://federal-electronics-elections-novelty.trycloudflare.com"
+application_url = "https://admissions-par-authentication-twelve.trycloudflare.com"
 embedded = true
 
 [build]
@@ -13,13 +13,13 @@ include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_orders,read_products,write_orders,write_products"
+scopes = "read_orders,read_products,write_orders,write_products,read_customers,write_customers"
 
 [auth]
 redirect_urls = [
-  "https://federal-electronics-elections-novelty.trycloudflare.com/auth/callback",
-  "https://federal-electronics-elections-novelty.trycloudflare.com/auth/shopify/callback",
-  "https://federal-electronics-elections-novelty.trycloudflare.com/api/auth/callback"
+  "https://admissions-par-authentication-twelve.trycloudflare.com/auth/callback",
+  "https://admissions-par-authentication-twelve.trycloudflare.com/auth/shopify/callback",
+  "https://admissions-par-authentication-twelve.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

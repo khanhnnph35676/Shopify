@@ -45,55 +45,30 @@ export const loader = async ({request}) => {
     products: productsData.products.edges,
   });
 };
-export const action = async ({request}) => {
-  const formData = new URLSearchParams(await request.text());
-  const productIds = formData.getAll('productIds'); // Lấy ID sản phẩm từ formData
 
-  const {admin} = await authenticate.admin(request);
-  const results = await Promise.all(
-    productIds.map(async (id) => {
-      const response = await admin.graphql(`
-        mutation productDelete($input: ProductDeleteInput!) {
-          productDelete(input: $input) {
-            deletedProductId
-            userErrors {
-              field
-              message
-            }
-          }
-        }
-      `, {
-        input: {id},
-      });
-      return await response.json();
-    })
-  );
-
-  return json(results); // Trả về kết quả cho client
-};
 export default function Products() {
   const [active, setActive] = useState(false);
-
+  const [deletingProductId, setDeletingProductId] = useState([]);
   const handleChange = useCallback(() => setActive(!active), [active]);
-// fomart status
+
+  // fomart status
   const formatStatus = (status) => {
     return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
   };
+
   // loc id
   const extractShopifyId = (shopifyId) => {
     return shopifyId.split("/").pop();
   };
+
   const {products} = useLoaderData();
   const navigate = useNavigate();
   const resourceName = {
     singular: 'Product',
     plural: 'Products'
   };
-
   const {selectedResources, allResourcesSelected, handleSelectionChange} = useIndexResourceState(products);
-  const handleDelete = async () => {
 
-  };
   const rowMarkup = products.map(({node: product}, index) => (
     <IndexTable.Row
       id={product.id}
@@ -135,8 +110,14 @@ export default function Products() {
           {product.priceRange.minVariantPrice.amount} {product.priceRange.minVariantPrice.currencyCode}
         </Text>
       </IndexTable.Cell>
+
     </IndexTable.Row>
   ));
+  const handleDelete = async () => {
+    // setDeletingProductId(selectedResources);
+    // await fetcher.submit({id: deletingProductId}, {method: "POST", action: "/app/deleteProduct"});
+  };
+
   return (
     <Page fullWidth>
       <LegacyStack style={{display: 'flex'}} wrap={false}>
@@ -191,10 +172,10 @@ export default function Products() {
           <Modal
             open={active}
             onClose={handleChange}
-            title="Reach more shoppers with Instagram product tags"
+            title="Delete selected products?"
             primaryAction={{
               content: 'Delete',
-              onAction: handleDelete,
+              onAction: handleDelete
             }}
             secondaryActions={[
               {
@@ -206,7 +187,7 @@ export default function Products() {
             <Modal.Section>
               <TextContainer>
                 <p>
-                  You are delete selected products?<br/>
+                  Are you sure you want to delete the selected products?
                 </p>
               </TextContainer>
             </Modal.Section>

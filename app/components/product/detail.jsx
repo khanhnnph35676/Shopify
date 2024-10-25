@@ -8,30 +8,46 @@ import {
   LegacyStack,
   DropZone,
   Select
-}
-  from '@shopify/polaris';
+} from '@shopify/polaris';
 import {NoteIcon} from '@shopify/polaris-icons';
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import '../css/style.css';
 
-// import {Link, useNavigate} from "@remix-run/react";
 export default function Detail() {
-  // category
+  // State quản lý sản phẩm và các thông tin khác
   const [selected, setSelected] = useState('');
+  const [productId, setProductId] = useState('');
+  const [productData, setProductData] = useState({});
+  const [files, setFiles] = useState([]);
+  const [value, setValue] = useState('');
+
+  // Lấy ID sản phẩm từ URL
+  useEffect(() => {
+    const urlParts = window.location.href.split('/');
+    const id = urlParts[urlParts.length - 1]; // Lấy phần cuối cùng của URL
+    setProductId(id); // Lưu ID vào trạng thái
+    fetchProductDetails(id); // Gọi API để lấy chi tiết sản phẩm
+  }, []);
+
+  // Hàm gọi API để lấy chi tiết sản phẩm
+  const fetchProductDetails = async (id) => {
+    const response = await fetch(`/api/products/${id}`, {method: 'GET'});
+    const data = await response.json();
+    setProductData(data.product); // Lưu dữ liệu sản phẩm vào trạng thái
+    setValue(data.product.title); // Cập nhật tiêu đề sản phẩm vào form
+    console.error('Error fetching product details:', error);
+  };
 
   const handleSelectChange = useCallback(
     (value) => setSelected(value),
     [],
   );
+
   const options = [
     {label: 'Today', value: 'today'},
     {label: 'Yesterday', value: 'yesterday'},
     {label: 'Last 7 days', value: 'lastWeek'},
   ];
-
-
-  // upload image
-  const [files, setFiles] = useState([]);
 
   const handleDropZoneDrop = useCallback(
     (_dropFiles, acceptedFiles, _rejectedFiles) =>
@@ -68,18 +84,17 @@ export default function Detail() {
       ))}
     </LegacyStack>
   );
-  const [value, setValue] = useState('');
 
   const handleChange = useCallback(
     (newValue) => setValue(newValue),
     [],
   );
+
   return (
     <>
       <Page
         backAction={{content: 'Product Detail', url: '/app/product'}}
         title="Product Detail"
-        // subtitle="Perfect for any pet"
         compactTitle
         primaryAction={{content: 'Save'}}
         secondaryActions={[
@@ -97,8 +112,13 @@ export default function Detail() {
         <Grid>
           <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 8, xl: 8}}>
             <LegacyCard sectioned>
-              <TextField label="Title" value={value} onChange={handleChange} autoComplete="off"
-                         placeholder='Name product'/>
+              <TextField
+                label="Title"
+                value={value}
+                onChange={handleChange}
+                autoComplete="off"
+                placeholder='Name product'
+              />
               <br/>
               <DropZone onDrop={handleDropZoneDrop} variableHeight label='Media'>
                 {uploadedFiles}
@@ -112,6 +132,10 @@ export default function Detail() {
                 value={selected}
               />
               <br/>
+              {/* In ra ID sản phẩm */}
+              <Text variant="bodyLg" as="p">
+               
+              </Text>
             </LegacyCard>
           </Grid.Cell>
           <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
